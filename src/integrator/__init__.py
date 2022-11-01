@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import numpy as np
 import abc
 
 
 class IntegratorBase(abc.ABC):
     @abc.abstractmethod
-    def compute_step(self, f, t_n, y_n, h):
+    def compute_step(self: IntegratorBase, f, t_n, y_n, h):
         pass
 
     def integrate(self, f, t, init_y):
