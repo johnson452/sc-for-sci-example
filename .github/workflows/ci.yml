@@ -11,9 +11,18 @@ on:
 # We start with actions/checkout (type: a) @ branch/version
 # Actions have custom dictionary (with:) to give options that are specific to the action
 # Actions type (b) - run: -
+# Key, called strategy, how to setup multiple runs, will run every combinations
+# fail-fast, continues tests even if one fails
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    name: Test $${{ matrix.runs-on }}
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - ubuntu-latest
+          - windows-latest
     steps: 
       - uses: actions/checkout@v3
       
