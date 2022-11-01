@@ -1,0 +1,27 @@
+# Python dict format, this tells it when to run (at pull request), and for which branch (main)
+on: 
+  pull_request:
+  push:
+    branches:
+      - main
+      
+# Must also have jobs, things to run, we called them "tests" but can be anything and referenced by name later      
+# Specify OS. Steps, lists of what to do.
+# Steps (a): Actions, (b): Shell steps
+# We start with actions/checkout (type: a) @ branch/version
+# Actions have custom dictionary (with:) to give options that are specific to the action
+# Actions type (b) - run: -
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-python@v4
+        with: 
+          python-version: "3.11"
+          
+      - name: Install packahe and test requirements
+        run: python -m pip install .[test]
+      
+      - run: python -m pytest
