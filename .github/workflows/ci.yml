@@ -19,8 +19,25 @@ concurrency:
 # We start with actions/checkout (type: a) @ branch/version
 # Actions have custom dictionary (with:) to give options that are specific to the action
 # Actions type (b) - run: -
+
+#Lint:
+#checks out our code
+#Checks out python
+#Runs code
+
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 
+      - uses: actions/setup-python@v4 
+        with: 
+          python-version: "3.x"
+      - uses: pre-commit/action@3.0.0 
+      
   tests:
+    needs: [lint]
     name: Test ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
     strategy:
