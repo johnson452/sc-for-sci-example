@@ -11,9 +11,9 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
-  
-# Must also have jobs, things to run, we called them "tests" but can be anything and referenced by name later      
+
+
+# Must also have jobs, things to run, we called them "tests" but can be anything and referenced by name later
 # Specify OS. Steps, lists of what to do.
 # Steps (a): Actions, (b): Shell steps
 # We start with actions/checkout (type: a) @ branch/version
@@ -30,12 +30,12 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 
-      - uses: actions/setup-python@v4 
-        with: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
           python-version: "3.x"
-      - uses: pre-commit/action@v3.0.0 
-      
+      - uses: pre-commit/action@v3.0.0
+
   tests:
     needs: [lint]
     name: Test ${{ matrix.runs-on }}
@@ -48,12 +48,12 @@ jobs:
           - windows-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - uses: actions/setup-python@v3
         with:
           python-version: "3.11"
-          
+
       - name: Install package and test requirements
         run: python -m pip install .[test]
-      
+
       - run: python -m pytest
