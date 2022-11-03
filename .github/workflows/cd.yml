@@ -2,23 +2,23 @@ name: CD
 
 
 # workflow_dispatch, adds button to click in github to run thi
-on:
+on: 
   workflow_dispatch:
-  releases:
+  release:
     types:
       - pulish
-
-
+      
+      
 # runs-on: required
-job:
-  build:
+jobs:
+  build: 
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - uses: actions/checkout@v3
-
+      
       #Build a package
-      - runs: pipx run build
-
+      - uses: pipx run build
+      
       #Need to take filex we created (stored in /dist by default)
       - uses: actions/upload-artifac@v3
         with:
